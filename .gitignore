@@ -1,0 +1,19 @@
+# 密钥与构建产物，绝对不要提交
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+keystore/
+
+# Foundry
+out/
+cache/
+broadcast/
+forge-std/
+lib/
+
+# 系统
+.DS_Store
+Thumbs.db
+node_modules/
