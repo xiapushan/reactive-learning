@@ -13,6 +13,7 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 日期 | 内容 | 笔记 |
 |---|---|---|
 | 2026-11-13 | 环境搭好 + 首个端到端链路跑通（Sepolia ↔ Lasna ↔ Sepolia） | [notes/2026-11-13.md](notes/2026-11-13.md) |
+| 2026-11-17 | 第 0 周任务提交（钱包 / lREACT / 仓库 / forge 版本） | [notes/2026-11-17.md](notes/2026-11-17.md) |
 
 ## 环境
 
