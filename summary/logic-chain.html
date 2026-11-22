@@ -1,0 +1,179 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Reactive 逻辑链</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{width:1700px;background:#ffffff;font-family:-apple-system,"PingFang SC",sans-serif;color:#1f2328;padding:44px 48px 40px}
+h1{font-size:34px;letter-spacing:-.5px}
+.sub{color:#59636e;font-size:15px;margin-top:8px;letter-spacing:.2px}
+.rule{height:1px;background:#d8dee4;margin:26px 0 30px}
+
+.flow{display:grid;grid-template-columns:1fr 90px 1.15fr 90px 1fr;align-items:start}
+.lane{border:2px solid;border-radius:14px;padding:16px 16px 18px;background:#fff}
+.lane-title{font-size:17px;font-weight:700;letter-spacing:.3px;margin-bottom:4px}
+.lane-sub{font-size:12.5px;color:#59636e;margin-bottom:14px;font-family:Menlo,monospace}
+
+.node{border:1.5px solid #d0d7de;border-radius:9px;padding:10px 12px;margin-bottom:10px;background:#f6f8fa}
+.node:last-child{margin-bottom:0}
+.node .name{font-size:14px;font-weight:650;line-height:1.4}
+.node .desc{font-size:12.5px;color:#59636e;line-height:1.55;margin-top:5px}
+.node code{font-family:Menlo,monospace;font-size:12px;background:#eaeef2;padding:1px 5px;border-radius:4px}
+.node.warn{background:#fff5f5;border-color:#ffb3b8}
+.node.warn .name{color:#b3261e}
+.node.key{background:#f0f6ff;border-color:#79b8ff}
+
+.badge{display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;
+  font-size:12px;font-weight:700;color:#fff;margin-right:6px;vertical-align:1px}
+
+.arrowcol{display:flex;flex-direction:column;justify-content:center;align-items:center;padding-top:120px}
+.arrowcol .lbl{font-size:11.5px;color:#59636e;text-align:center;line-height:1.4;margin-top:6px;font-family:Menlo,monospace}
+.arrowcol svg{display:block}
+
+.l1{border-color:#3b82f6}.l1 .lane-title{color:#1d4ed8}.l1 .b1{background:#3b82f6}
+.l2{border-color:#7c3aed}.l2 .lane-title{color:#6d28d9}.l2 .b2{background:#7c3aed}
+.l3{border-color:#059669}.l3 .lane-title{color:#047857}.l3 .b3{background:#059669}
+
+.bands{display:grid;grid-template-columns:1.05fr 1fr;gap:18px;margin-top:26px}
+.band{border:1.5px solid #d0d7de;border-radius:12px;padding:16px 18px;background:#fbfcfd}
+.band h3{font-size:15px;margin-bottom:12px;letter-spacing:.3px}
+.band.red{border-color:#ffb3b8;background:#fffafa}
+.band.red h3{color:#b3261e}
+.row{display:flex;gap:10px;font-size:13px;line-height:1.6;margin-bottom:9px;align-items:flex-start}
+.row:last-child{margin-bottom:0}
+.num{flex:0 0 auto;font-family:Menlo,monospace;font-size:11.5px;font-weight:700;color:#fff;background:#b3261e;
+  border-radius:5px;padding:2px 6px;margin-top:1px}
+.num.k{background:#0969da}
+.rowsmall{font-size:12.5px;color:#59636e}
+.hl{font-weight:650;color:#1f2328}
+.tagline{margin-top:22px;font-size:13px;color:#59636e;text-align:center;letter-spacing:.2px}
+</style></head><body>
+
+<h1>Reactive 逻辑链：一笔事件走完全程</h1>
+<p class="sub">源链 emit → 订阅等值匹配 → Lasna 上 react() 判断 → Callback Proxy → 目标链执行</p>
+<div class="rule"></div>
+
+<div class="flow">
+
+  <!-- 源链 -->
+  <div class="lane l1">
+    <div class="lane-title">① 源链</div>
+    <div class="lane-sub">Sepolia · 11155111</div>
+
+    <div class="node">
+      <div class="name">ERC-20 · <code>Transfer(from,to,value)</code></div>
+      <div class="desc"><code>from</code> / <code>to</code> 是 indexed（topic1/2）<br><code>value</code> 在 data 里，32 字节</div>
+    </div>
+
+    <div class="node">
+      <div class="name">我的测试代币 <code>0x4c8c…2802</code></div>
+      <div class="desc">谁发事件谁付这条链的 gas</div>
+    </div>
+
+    <div class="node warn">
+      <div class="name">⚠ 通配 = 烧钱</div>
+      <div class="desc">订阅里写 <code>address(0)</code> 会收全链所有 Transfer，每条都收费</div>
+    </div>
+  </div>
+
+  <!-- 箭头 -->
+  <div class="arrowcol">
+    <svg width="74" height="24"><line x1="2" y1="12" x2="62" y2="12" stroke="#8b949e" stroke-width="2"/>
+      <polygon points="62,5 74,12 62,19" fill="#8b949e"/></svg>
+    <div class="lbl">日志</div>
+  </div>
+
+  <!-- Reactive 侧 -->
+  <div class="lane l2">
+    <div class="lane-title">② Reactive 侧</div>
+    <div class="lane-sub">Lasna · 5318007</div>
+
+    <div class="node key">
+      <div class="name"><span class="badge b2">1</span>订阅匹配 = 等值匹配</div>
+      <div class="desc">chainId + 合约地址 + topic0 <span class="hl">三者精确</span><br>
+      topic1~3 全填 <code>REACTIVE_IGNORE</code><br>
+      <span class="hl">没有「大于」「包含」</span>，阈值只能进 react()</div>
+    </div>
+
+    <div class="node">
+      <div class="name"><span class="badge b2">2</span><code>react(LogRecord)</code> + <code>onlySystem</code></div>
+      <div class="desc">防伪造：不是 0x8888… 打来的直接拒</div>
+    </div>
+
+    <div class="node warn">
+      <div class="name"><span class="badge b2">3</span>早退过滤：用 <code>return</code></div>
+      <div class="desc">topic0 / 合约不对 → return<br>
+      <code>value &lt; 阈值</code> → return<br>
+      <span class="hl">不用 revert</span>：回滚照样全额收费</div>
+    </div>
+
+    <div class="node">
+      <div class="name"><span class="badge b2">4</span>命中才做事</div>
+      <div class="desc">计数 +1 → 次数归零 <code>unsubscribe</code><br>
+      <code>requestCallbackV_1_0(payload)</code><br>
+      payload <span class="hl">首参必须 <code>address(0)</code></span> 占位</div>
+    </div>
+
+    <div class="node">
+      <div class="name">费用 = <code>p_base × C × (g + 100k)</code></div>
+      <div class="desc">只算 react() 函数体，系统开销不收<br>本链实付 ≈ 0.018 lREACT / 次</div>
+    </div>
+  </div>
+
+  <!-- 箭头 -->
+  <div class="arrowcol">
+    <svg width="74" height="24"><line x1="2" y1="12" x2="62" y2="12" stroke="#8b949e" stroke-width="2"/>
+      <polygon points="62,5 74,12 62,19" fill="#8b949e"/></svg>
+    <div class="lbl">回调<br>请求</div>
+  </div>
+
+  <!-- 目标链 -->
+  <div class="lane l3">
+    <div class="lane-title">③ 目标链</div>
+    <div class="lane-sub">Sepolia / Base Sepolia</div>
+
+    <div class="node">
+      <div class="name">Callback Proxy</div>
+      <div class="desc">注入<span class="hl">真实</span> reactive 地址到首参<br>
+      先扣 <code>_extraGas</code> + <code>_maxChargeGas</code>，剩余才转发</div>
+    </div>
+
+    <div class="node">
+      <div class="name">我的回调合约 <code>onEvent()</code></div>
+      <div class="desc"><code>onlyServiceProvider</code>（必须是 Proxy）<br>
+      <code>onlyCallbackSender</code>（必须是预期合约）</div>
+    </div>
+
+    <div class="node">
+      <div class="name">实际动作 → emit 证据事件</div>
+      <div class="desc">这笔交易哈希就是提交材料<br>
+      <span class="hl">钱由回调合约出</span>（目标链原生币），失败也收费</div>
+    </div>
+
+    <div class="node warn">
+      <div class="name">⚠ 参数逐链不同</div>
+      <div class="desc">Reactive 侧 <code>1000 / 100k / 50k</code><br>Sepolia Proxy <code>1100 / 150k / 50k</code></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="bands">
+  <div class="band red">
+    <h3>三条会要命的规则</h3>
+    <div class="row"><span class="num">1</span><div><span class="hl">订阅宽度 = 花钱速度。</span>等值匹配，通配符越宽，被唤醒越频繁，每条都收费。</div></div>
+    <div class="row"><span class="num">2</span><div><span class="hl">被过滤的通知照样收费。</span><code>return</code> 省的是后续 gas，不是通知本身的费用；<code>revert</code> 更亏，全额收费。</div></div>
+    <div class="row"><span class="num">3</span><div><span class="hl">debt &gt; 0 就静默死亡。</span>检查在花 gas 之前、判定就是「大于零」——不报错、不发交易、链上什么都看不到。</div></div>
+  </div>
+
+  <div class="band">
+    <h3>延迟实测：锅不在 Reactive</h3>
+    <div class="row"><span class="num k">源</span><div>源链事件块 → Lasna react 块：<span class="hl">0 ~ 1 秒</span></div></div>
+    <div class="row"><span class="num k">中</span><div>Lasna react 块 → 目标链回调块：<span class="hl">12 秒</span>（Sepolia 出块 12s）</div></div>
+    <div class="row"><span class="num k">终</span><div>端到端 <span class="hl">12 秒</span>；换 Base Sepolia（200ms 出块）可压到 <span class="hl">≈1 秒</span></div></div>
+    <div class="rowsmall" style="margin-top:11px;border-top:1px dashed #d0d7de;padding-top:10px">
+      200ms 出块下，计时 / 冷却 / 截止时间一律用<span class="hl">时间戳</span>，不用块高。</div>
+  </div>
+</div>
+
+<div class="tagline">记住一句话：订阅负责粗筛（省钱），react() 负责精筛（做事），回调负责落地（付钱）。</div>
+
+</body></html>
