@@ -19,6 +19,7 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 2026-11-18 | D3 第一次部署：监控 Sepolia 代币转账（上链实测） | [notes/d3-first-deploy.md](notes/d3-first-deploy.md) |
 | 2026-11-22 | 核心概念复盘（订阅/费用/安全/地址/性能 + 自测题） | [notes/concepts-summary.md](notes/concepts-summary.md) |
 | 2026-11-22 | D4【必做】跨链回调三步走 + 失败实验 | [notes/d4-cross-chain-callback.md](notes/d4-cross-chain-callback.md) |
+| 2026-11-22 | D5 动态订阅：运行中增/删订阅（含退订耗尽余额实测） | [notes/d5-dynamic-subscription.md](notes/d5-dynamic-subscription.md) |
 
 ## 总结区
 
