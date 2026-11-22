@@ -19,6 +19,14 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 2026-11-18 | D3 第一次部署：监控 Sepolia 代币转账（上链实测） | [notes/d3-first-deploy.md](notes/d3-first-deploy.md) |
 | 2026-11-22 | 核心概念复盘（订阅/费用/安全/地址/性能 + 自测题） | [notes/concepts-summary.md](notes/concepts-summary.md) |
 
+## 总结区
+
+所有复盘、速查图、概念总结都在 [`summary/`](summary/README.md)。
+
+**一图看懂逻辑链** → [summary/logic-chain.png](summary/logic-chain.png)
+
+![Reactive 逻辑链](summary/logic-chain.png)
+
 ## 环境
 
 - Foundry `v1.9.0`，Solc `0.8.29`
