@@ -29,10 +29,24 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 
 ## 环境
 
-- Foundry `v1.9.0`，Solc `0.8.29`
-- 测试钱包：`0xf8a9863c156CCc444ccD666Fe7000dF7F5760A31`（**只用于本期测试网**）
+> 按课程《新手指南》第 3 节模板填写。
+
+- 操作系统：macOS（Apple Silicon）
+- Foundry 版本：`1.9.0`（Solc `0.8.29`）
+- 测试钱包地址：`0xf8a9863c156CCc444ccD666Fe7000dF7F5760A31`
+- Lasna 地址页链接：https://lasna.reactscan.net/address/0xf8a9863c156CCc444ccD666Fe7000dF7F5760A31
+- 本地测试结果：`forge test -vv` → **8 passed / 0 failed**（见 [notes/2026-11-13.md](notes/2026-11-13.md)）
 - 模板仓库：https://github.com/ethpanda-org/reactive-builder-camp
 - Omni 写法参考（**不要用旧 ReactVM 写法**）：https://dev.reactive.network/reactive-contracts
+
+## 遇到的问题
+
+| 正在做哪一步 | 报错 | 解决方式 |
+|---|---|---|
+| MetaMask 切换 Sepolia | 新版 App 找不到「显示测试网络」开关 | 不用 UI 切网络，改由 `cast --rpc-url` 决定链 |
+| `forge script` 部署 | `vm.envUint: missing hex prefix` | MetaMask 导出的私钥补上 `0x` |
+| 部署脚本 | `cast: command not found` | 脚本内兜底把 `~/.foundry/bin` 注入 PATH |
+| GitHub 添加 SSH key | 网页表单按钮灰着、无报错 | 改用 `gh auth login` 走 API 上传公钥 |
 
 ## 链上记录
 
