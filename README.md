@@ -17,6 +17,7 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 2026-11-18 | D1 用例拆解卡：钱包异常转出自动保护 | [notes/d1-use-case.md](notes/d1-use-case.md) |
 | 2026-11-18 | D2 读懂费用：Lasna 系统合约三个参数实测 | [notes/d2-fees.md](notes/d2-fees.md) |
 | 2026-11-18 | D3 第一次部署：监控 Sepolia 代币转账（上链实测） | [notes/d3-first-deploy.md](notes/d3-first-deploy.md) |
+| 2026-11-22 | 核心概念复盘（订阅/费用/安全/地址/性能 + 自测题） | [notes/concepts-summary.md](notes/concepts-summary.md) |
 
 ## 环境
 
