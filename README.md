@@ -2,6 +2,10 @@
 
 ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Omni Buildathon 参赛记录。
 
+## 结业项目
+
+**Reactive Guardian** — 热钱包异常转出自动保护：[github.com/xiapushan/reactive-guardian](https://github.com/xiapushan/reactive-guardian)
+
 ## 我是谁 / 目标
 
 - WCB 用户名：`（填写）`
@@ -20,6 +24,7 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 2026-11-22 | 核心概念复盘（订阅/费用/安全/地址/性能 + 自测题） | [notes/concepts-summary.md](notes/concepts-summary.md) |
 | 2026-11-22 | D4【必做】跨链回调三步走 + 失败实验 | [notes/d4-cross-chain-callback.md](notes/d4-cross-chain-callback.md) |
 | 2026-11-22 | D5 动态订阅：运行中增/删订阅（含退订耗尽余额实测） | [notes/d5-dynamic-subscription.md](notes/d5-dynamic-subscription.md) |
+| 2026-11-28 | **D9【必做】跑通项目**：Reactive Guardian 首条完整链路 | [notes/d9-first-full-chain.md](notes/d9-first-full-chain.md) |
 
 ## 总结区
 
