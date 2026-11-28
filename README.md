@@ -25,6 +25,7 @@ ETHPanda × Reactive Network 两周共学（2026-11-16 → 11-29）+ Reactive Om
 | 2026-11-22 | D4【必做】跨链回调三步走 + 失败实验 | [notes/d4-cross-chain-callback.md](notes/d4-cross-chain-callback.md) |
 | 2026-11-22 | D5 动态订阅：运行中增/删订阅（含退订耗尽余额实测） | [notes/d5-dynamic-subscription.md](notes/d5-dynamic-subscription.md) |
 | 2026-11-28 | **D9【必做】跑通项目**：Reactive Guardian 首条完整链路 | [notes/d9-first-full-chain.md](notes/d9-first-full-chain.md) |
+| 2026-11-28 | D11 给项目加保护（白名单/去重/双上限）+ 11 个测试 | [notes/d11-protections-and-tests.md](notes/d11-protections-and-tests.md) |
 
 ## 总结区
 
